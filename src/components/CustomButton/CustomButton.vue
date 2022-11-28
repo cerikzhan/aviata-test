@@ -84,9 +84,9 @@ export default defineComponent({
     &:after {
       content: " ";
       display: block;
-      width: 18px;
-      height: 18px;
-      margin: 2px;
+      width: 16px;
+      height: 16px;
+      margin: 1px;
       border-radius: 50%;
       border-width: 3px;
       border-style: solid;

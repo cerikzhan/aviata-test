@@ -1,0 +1,12 @@
+@function rem($pixels, $context: $browser-context) {
+  @return calc($pixels / $context) + rem;
+}
+
+$browser-context: 16;
+
+$primary-color: #55bb06;
+$secondary-color: #7284e4;
+$warn-color: #ff9900;
+$background-color: #d7d7d7;
+$text-color: #202123;
+$text-color-muted: #707276;

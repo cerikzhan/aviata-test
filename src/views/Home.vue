@@ -1,18 +1,25 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js + TypeScript App" />
+    <the-sidebar />
+    <div class="content">list</div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import HelloWorld from "@/components/HelloWorld.vue"; // @ is an alias to /src
+import TheSidebar from "@/components/TheSidebar/TheSidebar.vue";
 
 export default defineComponent({
   name: "Home",
-  components: {
-    HelloWorld,
-  },
+  components: { "the-sidebar": TheSidebar },
 });
 </script>
+
+<style lang="scss" scoped>
+.home {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  grid-column-gap: 20px;
+  margin: 50px 0;
+}
+</style>

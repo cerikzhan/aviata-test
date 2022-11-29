@@ -30,7 +30,7 @@ export default defineComponent({
   },
   setup(props, { emit }) {
     const model = computed({
-      get() {
+      get(): any {
         return props.modelValue;
       },
       set(value: string[] | boolean) {
@@ -56,6 +56,7 @@ export default defineComponent({
   &__label {
     display: inline-flex;
     align-items: center;
+    font-size: rem(12);
     user-select: none;
     cursor: pointer;
 

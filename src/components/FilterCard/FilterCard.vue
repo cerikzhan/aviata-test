@@ -51,6 +51,7 @@ export default defineComponent({
   padding: 12px;
   background-color: white;
   border-radius: 4px;
+  overflow: hidden;
 
   &__header {
     display: flex;
@@ -79,6 +80,17 @@ export default defineComponent({
     display: flex;
     flex-direction: column;
     gap: 12px;
+    max-height: 260px;
+    overflow: auto;
+
+    &::-webkit-scrollbar {
+      width: 4px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: rgba(169, 169, 169, 0.52);
+      border-radius: 2px;
+    }
   }
 }
 </style>

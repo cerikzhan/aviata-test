@@ -2,12 +2,12 @@
   <div class="custom-checkbox">
     <input
       v-model="model"
-      :id="`checkbox-input-${num}`"
+      :id="`checkbox-input-${value}`"
       :value="value"
       type="checkbox"
       class="custom-checkbox__input"
     />
-    <label :for="`checkbox-input-${num}`" class="custom-checkbox__label"
+    <label :for="`checkbox-input-${value}`" class="custom-checkbox__label"
       ><slot
     /></label>
   </div>
@@ -23,10 +23,6 @@ export default defineComponent({
   props: {
     modelValue: { type: [Array, Boolean] },
     value: { type: [Boolean, String] },
-    num: {
-      type: Number,
-      default: 1,
-    },
   },
   setup(props, { emit }) {
     const model = computed({

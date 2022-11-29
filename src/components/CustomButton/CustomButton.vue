@@ -16,7 +16,7 @@ type ButtonVariant = "primary" | "secondary" | "link";
 type ButtonSize = "md" | "sm";
 
 export default defineComponent({
-  name: "CustomButton.vue",
+  name: "CustomButton",
   props: {
     variant: {
       type: String as PropType<ButtonVariant>,

@@ -9,10 +9,10 @@
     </div>
 
     <div class="ui__checkbox">
-      <custom-checkbox v-model="checks" :num="1" value="1"
+      <custom-checkbox v-model="checks" value="1"
         >Только прямые</custom-checkbox
       >
-      <custom-checkbox v-model="checks" :num="2" value="2"
+      <custom-checkbox v-model="checks" value="2"
         >Только с багажом</custom-checkbox
       >
     </div>

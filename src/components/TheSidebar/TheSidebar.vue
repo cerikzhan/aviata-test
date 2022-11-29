@@ -7,6 +7,7 @@
         }}</custom-checkbox>
       </template>
     </filter-card>
+
     <filter-card title="Авиакомпании">
       <template v-for="option in airlineComputed" :key="option.id">
         <custom-checkbox v-model="airlines" :value="option.value">{{
@@ -61,7 +62,7 @@ export default defineComponent({
         title: "Только возвратные",
       },
     ];
-    const airlines = ref<string[]>([]);
+    const airlines = ref<string[]>(["ALL"]);
     const airlineOptions = ref<FilterOption[]>([]);
 
     const airlineComputed = computed(() => [
@@ -88,7 +89,7 @@ export default defineComponent({
 
     function onFilterReset() {
       tariffs.value = [];
-      airlines.value = [];
+      airlines.value = ["ALL"];
     }
 
     return {

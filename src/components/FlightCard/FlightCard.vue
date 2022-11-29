@@ -11,13 +11,18 @@
           </div>
           <h3 class="card__title">Air Astana</h3>
         </div>
+        <p class="card__baggage-text">Нет багажа</p>
         <date-time />
-        <route-info />
+        <route-info class="card__route" />
         <date-time />
       </div>
       <div class="card__actions">
         <custom-button variant="link" size="sm">Детали перелета </custom-button>
         <custom-button variant="link" size="sm">Условия тарифа </custom-button>
+        <p class="card__refund">
+          <img src="../../assets/icons/return.svg" alt="невозвратный" />
+          <span>невозвратный</span>
+        </p>
       </div>
     </div>
     <div class="card__footer">
@@ -70,6 +75,7 @@ export default defineComponent({
 
     @include laptop {
       width: 100%;
+      padding: 40px 20px;
     }
   }
 
@@ -91,17 +97,54 @@ export default defineComponent({
     }
   }
 
+  &__baggage-text {
+    display: none;
+    font-size: rem(12);
+
+    @include phone {
+      display: block;
+    }
+  }
+
   &__info {
-    display: flex;
+    display: grid;
+    grid-template-columns: 2fr 1fr 170px 1fr;
+    grid-gap: 10px;
+    justify-items: center;
     align-items: center;
-    justify-content: space-between;
-    margin-bottom: 40px;
+
+    @include phone {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-gap: 25px;
+    }
+  }
+
+  &__route {
+    @include phone {
+      grid-row: 3;
+      grid-column: 1 / 3;
+      width: 100%;
+    }
   }
 
   &__actions {
     display: flex;
     align-items: center;
     gap: 20px;
+    margin-top: 40px;
+
+    @include phone {
+      display: none;
+    }
+  }
+
+  &__refund {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: $text-color-muted;
+    font-size: rem(12);
   }
 
   &__footer {
@@ -117,18 +160,39 @@ export default defineComponent({
       justify-content: space-between;
       width: 100%;
     }
+
+    @include phone {
+      flex-direction: column;
+      justify-content: center;
+    }
   }
 
   &__price {
     margin-bottom: 12px;
     font-size: rem(24);
     font-weight: 600;
+
+    @include laptop {
+      margin-bottom: 0;
+    }
+
+    @include phone {
+      margin-bottom: 12px;
+    }
   }
 
   &__passengers {
     margin-top: 8px;
     font-size: rem(12);
     color: $text-color-muted;
+
+    @include laptop {
+      margin-top: 0;
+    }
+
+    @include phone {
+      margin-top: 8px;
+    }
   }
 
   &__baggage {

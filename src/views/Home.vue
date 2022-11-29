@@ -1,7 +1,8 @@
 <template>
   <div class="home">
     <the-sidebar />
-    <div class="content">
+    <div class="home__content">
+      <flight-card />
       <flight-card />
     </div>
   </div>
@@ -24,5 +25,16 @@ export default defineComponent({
   grid-template-columns: 240px 1fr;
   grid-column-gap: 20px;
   margin: 50px 0;
+
+  @include tablet {
+    grid-template-columns: 1fr;
+    grid-row-gap: 20px;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
 }
 </style>

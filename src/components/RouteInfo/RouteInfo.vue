@@ -24,8 +24,6 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .route {
-  width: 170px;
-
   &__top {
     display: flex;
     align-items: center;
@@ -58,7 +56,7 @@ export default defineComponent({
     left: 0;
     right: 0;
     height: 1px;
-    background-color: $text-color-muted;
+    background-color: $gray-color;
   }
 
   &__dot {

@@ -26,7 +26,7 @@ export default defineComponent({
 
   &__red {
     font-size: rem(10);
-    color: rgba(255, 55, 36, 0.8);
+    color: $danger-color;
   }
 
   &__time {

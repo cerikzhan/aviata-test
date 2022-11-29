@@ -11,7 +11,8 @@
           </div>
           <h3 class="card__title">Air Astana</h3>
         </div>
-
+        <date-time />
+        <route-info />
         <date-time />
       </div>
       <div class="card__actions">
@@ -37,10 +38,15 @@
 import { defineComponent } from "vue";
 import CustomButton from "@/components/CustomButton/CustomButton.vue";
 import DateTime from "@/components/DateTime/DateTime.vue";
+import RouteInfo from "@/components/RouteInfo/RouteInfo.vue";
 
 export default defineComponent({
   name: "FlightCard",
-  components: { "date-time": DateTime, "custom-button": CustomButton },
+  components: {
+    "route-info": RouteInfo,
+    "date-time": DateTime,
+    "custom-button": CustomButton,
+  },
 });
 </script>
 
@@ -51,10 +57,20 @@ export default defineComponent({
   justify-content: space-between;
   background-color: white;
   border-radius: 4px;
+  overflow: hidden;
+
+  @include laptop {
+    flex-direction: column;
+    justify-content: flex-start;
+  }
 
   &__body {
     flex: 1 1 auto;
     padding: 40px;
+
+    @include laptop {
+      width: 100%;
+    }
   }
 
   &__airline {
@@ -79,6 +95,7 @@ export default defineComponent({
     display: flex;
     align-items: center;
     justify-content: space-between;
+    margin-bottom: 40px;
   }
 
   &__actions {
@@ -91,8 +108,15 @@ export default defineComponent({
     display: flex;
     flex-direction: column;
     align-items: center;
+    height: 100%;
     padding: 12px 20px;
     background-color: #f5f5f5;
+
+    @include laptop {
+      flex-direction: row;
+      justify-content: space-between;
+      width: 100%;
+    }
   }
 
   &__price {
@@ -104,7 +128,7 @@ export default defineComponent({
   &__passengers {
     margin-top: 8px;
     font-size: rem(12);
-    color: #707276;
+    color: $text-color-muted;
   }
 
   &__baggage {
@@ -114,6 +138,10 @@ export default defineComponent({
     margin-top: 12px;
     gap: 6px;
     font-size: rem(12);
+
+    @include laptop {
+      display: none;
+    }
   }
 }
 </style>

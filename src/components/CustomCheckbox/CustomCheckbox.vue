@@ -61,7 +61,7 @@ export default defineComponent({
       display: inline-block;
       width: 12px;
       height: 12px;
-      border: 2px solid #b9b9b9;
+      border: 2px solid $gray-color;
       border-radius: 2px;
       margin-right: 12px;
     }

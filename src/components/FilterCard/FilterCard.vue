@@ -88,7 +88,7 @@ export default defineComponent({
     }
 
     &::-webkit-scrollbar-thumb {
-      background-color: rgba(169, 169, 169, 0.52);
+      background-color: $gray-color;
       border-radius: 2px;
     }
   }

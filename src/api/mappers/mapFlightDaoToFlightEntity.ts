@@ -9,6 +9,7 @@ export const mapFlightDaoToFlightEntity = (flight: FlightDao): Flight => {
     currency: flight.currency,
     refundable: flight.refundable,
     stops: itinerary.stops,
+    baggage: !!flight.services["20KG"],
     carrier: {
       name: itinerary.carrier_name,
       short: itinerary.carrier,

@@ -44,6 +44,8 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .route {
+  width: 100%;
+
   &__top {
     display: flex;
     align-items: center;

@@ -1,7 +1,10 @@
 <template>
   <div class="home">
-    <the-sidebar />
+    <the-sidebar @change="getFlights" />
     <div class="home__content">
+      <p v-if="!flights.length" class="home__empty">
+        Нет рейсов подходящих по вашему запросу
+      </p>
       <flight-card
         v-for="flight in flights"
         :key="flight.id"
@@ -12,28 +15,55 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, ref } from "vue";
-import { fetchFlights } from "@/api/repositories";
+import { defineComponent, onMounted, ref, reactive } from "vue";
+import { fetchFlights, FlightParams } from "@/api/repositories";
 import { Flight } from "@/entities/Flight";
 import TheSidebar from "@/components/TheSidebar/TheSidebar.vue";
 import FlightCard from "@/components/FlightCard/FlightCard.vue";
+
+interface FlightFilters {
+  tariffs: string[] | null;
+  airlines: string[] | null;
+}
 
 export default defineComponent({
   name: "Home",
   components: { "flight-card": FlightCard, "the-sidebar": TheSidebar },
   setup() {
+    const pagination = reactive({
+      page: 1,
+      perPage: 10,
+      total: 0,
+      lastPage: 0,
+    });
     const flights = ref<Flight[]>([]);
 
     onMounted(() => {
       getFlights();
     });
 
-    async function getFlights() {
-      flights.value = await fetchFlights();
+    async function getFlights(filters?: FlightFilters) {
+      const params: FlightParams = {
+        page: pagination.page,
+        perPage: pagination.perPage,
+        tariffs: null,
+        airlines: null,
+      };
+
+      if (filters) {
+        params["tariffs"] = filters.tariffs;
+        params["airlines"] = filters.airlines;
+      }
+
+      const response = await fetchFlights(params);
+      flights.value = response.data;
+      pagination.total = response.meta.total;
+      pagination.lastPage = response.meta.lastPage;
     }
 
     return {
       flights,
+      getFlights,
     };
   },
 });
@@ -55,6 +85,11 @@ export default defineComponent({
     display: flex;
     flex-direction: column;
     gap: 20px;
+  }
+
+  &__empty {
+    text-align: center;
+    color: $text-color-muted;
   }
 }
 </style>

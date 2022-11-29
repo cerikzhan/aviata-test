@@ -1,6 +1,6 @@
 <template>
   <div class="sidebar">
-    <filter-card title="Опции тарифа">
+    <filter-card title="Опции тарифа" @reset="onResetTariffs">
       <template v-for="option in tariffOptions" :key="option.id">
         <custom-checkbox v-model="tariffs" :value="option.value">{{
           option.title
@@ -8,7 +8,7 @@
       </template>
     </filter-card>
 
-    <filter-card title="Авиакомпании">
+    <filter-card title="Авиакомпании" @reset="onResetAirlines">
       <template v-for="option in airlineComputed" :key="option.id">
         <custom-checkbox v-model="airlines" :value="option.short">{{
           option.title
@@ -24,7 +24,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, onMounted, computed } from "vue";
+import { defineComponent, ref, onMounted, computed, watch } from "vue";
 import { fetchAirlines } from "@/api/repositories";
 import { Airline } from "@/entities/Airline";
 import FilterCard from "@/components/FilterCard/FilterCard.vue";
@@ -38,7 +38,8 @@ export default defineComponent({
     "custom-checkbox": CustomCheckbox,
     "filter-card": FilterCard,
   },
-  setup() {
+  emits: ["change"],
+  setup(props, { emit }) {
     const tariffs = ref<string[]>([]);
     const tariffOptions = [
       {
@@ -69,6 +70,16 @@ export default defineComponent({
       ...airlineOptions.value,
     ]);
 
+    watch(
+      () => [tariffs.value, airlines.value],
+      () => {
+        emit("change", {
+          tariffs: tariffs.value.length ? tariffs.value : null,
+          airlines: airlines.value.length ? airlines.value : null,
+        });
+      }
+    );
+
     onMounted(() => {
       getAirlines();
     });
@@ -77,9 +88,17 @@ export default defineComponent({
       airlineOptions.value = await fetchAirlines();
     }
 
-    function onFilterReset() {
+    function onResetTariffs() {
       tariffs.value = [];
+    }
+
+    function onResetAirlines() {
       airlines.value = ["ALL"];
+    }
+
+    function onFilterReset() {
+      onResetTariffs();
+      onResetAirlines();
     }
 
     return {
@@ -88,6 +107,8 @@ export default defineComponent({
       airlineOptions,
       airlines,
       airlineComputed,
+      onResetTariffs,
+      onResetAirlines,
       onFilterReset,
     };
   },

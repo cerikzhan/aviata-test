@@ -30,7 +30,7 @@
       <custom-button>Выбрать</custom-button>
       <p class="card__passengers">Цена за всех пассажиров</p>
       <div class="card__baggage">
-        <p>Нет багажа</p>
+        <p>{{ flight.baggage ? "20 КГ" : "Нет багажа" }}</p>
         <custom-button variant="secondary" size="sm"
           >+ Добавить багаж</custom-button
         >

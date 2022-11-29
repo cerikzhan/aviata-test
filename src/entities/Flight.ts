@@ -4,6 +4,7 @@ export interface Flight {
   currency: string;
   refundable: boolean;
   stops: number;
+  baggage: boolean;
   carrier: {
     name: string;
     short: string;

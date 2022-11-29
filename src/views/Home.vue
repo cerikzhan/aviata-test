@@ -1,17 +1,20 @@
 <template>
   <div class="home">
     <the-sidebar />
-    <div class="content">list</div>
+    <div class="content">
+      <flight-card />
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 import TheSidebar from "@/components/TheSidebar/TheSidebar.vue";
+import FlightCard from "@/components/FlightCard/FlightCard.vue";
 
 export default defineComponent({
   name: "Home",
-  components: { "the-sidebar": TheSidebar },
+  components: { "flight-card": FlightCard, "the-sidebar": TheSidebar },
 });
 </script>
 

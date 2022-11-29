@@ -51,7 +51,8 @@ export const fetchFlights = (params: FlightParams) => {
     }
   }
 
-  const start = (params.page - 1) * params.perPage;
+  const start =
+    flights.length > params.perPage ? (params.page - 1) * params.perPage : 0;
 
   return Promise.resolve({
     data: flights.slice(start, start + params.perPage),

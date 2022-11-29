@@ -11,7 +11,9 @@
           </div>
           <h3 class="card__title">{{ flight.carrier.name }}</h3>
         </div>
-        <p class="card__baggage-text">Нет багажа</p>
+        <p class="card__baggage-text">
+          {{ flight.baggage ? "20 КГ" : "Нет багажа" }}
+        </p>
         <date-time />
         <route-info class="card__route" :flight="flight" />
         <date-time />

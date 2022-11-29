@@ -10,6 +10,11 @@
         :key="flight.id"
         :flight="flight"
       />
+      <pagination
+        :page="pagination.page"
+        :last-page="pagination.lastPage"
+        @change="onPageChange"
+      />
     </div>
   </div>
 </template>
@@ -20,6 +25,7 @@ import { fetchFlights, FlightParams } from "@/api/repositories";
 import { Flight } from "@/entities/Flight";
 import TheSidebar from "@/components/TheSidebar/TheSidebar.vue";
 import FlightCard from "@/components/FlightCard/FlightCard.vue";
+import Pagination from "@/components/Pagination/Pagination.vue";
 
 interface FlightFilters {
   tariffs: string[] | null;
@@ -28,7 +34,11 @@ interface FlightFilters {
 
 export default defineComponent({
   name: "Home",
-  components: { "flight-card": FlightCard, "the-sidebar": TheSidebar },
+  components: {
+    pagination: Pagination,
+    "flight-card": FlightCard,
+    "the-sidebar": TheSidebar,
+  },
   setup() {
     const pagination = reactive({
       page: 1,
@@ -61,9 +71,16 @@ export default defineComponent({
       pagination.lastPage = response.meta.lastPage;
     }
 
+    function onPageChange(page: number) {
+      pagination.page = page;
+      getFlights();
+    }
+
     return {
+      pagination,
       flights,
       getFlights,
+      onPageChange,
     };
   },
 });

@@ -27,6 +27,7 @@
 import { defineComponent, ref, onMounted, computed, watch } from "vue";
 import { fetchAirlines } from "@/api/repositories";
 import { Airline } from "@/entities/Airline";
+import { useFilter } from "@/composables/filter";
 import FilterCard from "@/components/FilterCard/FilterCard.vue";
 import CustomCheckbox from "@/components/CustomCheckbox/CustomCheckbox.vue";
 import CustomButton from "@/components/CustomButton/CustomButton.vue";
@@ -40,7 +41,8 @@ export default defineComponent({
   },
   emits: ["change"],
   setup(props, { emit }) {
-    const tariffs = ref<string[]>([]);
+    const { tariffs, airlines, onResetTariffs, onResetAirlines } = useFilter();
+
     const tariffOptions = [
       {
         id: 1,
@@ -58,7 +60,6 @@ export default defineComponent({
         title: "Только возвратные",
       },
     ];
-    const airlines = ref<string[]>(["ALL"]);
     const airlineOptions = ref<Airline[]>([]);
 
     const airlineComputed = computed(() => [
@@ -73,10 +74,7 @@ export default defineComponent({
     watch(
       () => [tariffs.value, airlines.value],
       () => {
-        emit("change", {
-          tariffs: tariffs.value.length ? tariffs.value : null,
-          airlines: airlines.value.length ? airlines.value : null,
-        });
+        emit("change");
       }
     );
 
@@ -86,14 +84,6 @@ export default defineComponent({
 
     async function getAirlines() {
       airlineOptions.value = await fetchAirlines();
-    }
-
-    function onResetTariffs() {
-      tariffs.value = [];
-    }
-
-    function onResetAirlines() {
-      airlines.value = ["ALL"];
     }
 
     function onFilterReset() {

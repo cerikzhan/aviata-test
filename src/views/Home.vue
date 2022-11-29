@@ -23,6 +23,7 @@
 import { defineComponent, onMounted, ref, reactive } from "vue";
 import { fetchFlights, FlightParams } from "@/api/repositories";
 import { Flight } from "@/entities/Flight";
+import { useFilter } from "@/composables/filter";
 import TheSidebar from "@/components/TheSidebar/TheSidebar.vue";
 import FlightCard from "@/components/FlightCard/FlightCard.vue";
 import Pagination from "@/components/Pagination/Pagination.vue";
@@ -48,25 +49,24 @@ export default defineComponent({
     });
     const flights = ref<Flight[]>([]);
 
+    const { tariffs, airlines } = useFilter();
+
     onMounted(() => {
       getFlights();
     });
 
-    async function getFlights(filters?: FlightFilters) {
+    async function getFlights() {
       const params: FlightParams = {
         page: pagination.page,
         perPage: pagination.perPage,
-        tariffs: null,
-        airlines: null,
+        tariffs: tariffs.value.length ? tariffs.value : null,
+        airlines: airlines.value.length ? airlines.value : null,
       };
 
-      if (filters) {
-        params["tariffs"] = filters.tariffs;
-        params["airlines"] = filters.airlines;
-      }
-
       const response = await fetchFlights(params);
+
       flights.value = response.data;
+      pagination.page = response.meta.page;
       pagination.total = response.meta.total;
       pagination.lastPage = response.meta.lastPage;
     }

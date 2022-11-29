@@ -53,14 +53,15 @@ export const fetchFlights = (params: FlightParams) => {
 
   const start =
     flights.length > params.perPage ? (params.page - 1) * params.perPage : 0;
+  const lastPage = Math.floor(flights.length / params.perPage);
 
   return Promise.resolve({
     data: flights.slice(start, start + params.perPage),
     meta: {
-      page: params.page,
+      page: params.page < lastPage || lastPage === 0 ? params.page : lastPage,
       perPage: params.perPage,
       total: flights.length,
-      lastPage: Math.ceil(flights.length / params.perPage),
+      lastPage: lastPage,
     },
   });
 };

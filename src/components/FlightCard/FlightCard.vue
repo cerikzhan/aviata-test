@@ -5,28 +5,28 @@
         <div class="card__airline">
           <div class="card__image">
             <img
-              :src="`https://aviata.kz/static/airline-logos/80x80/${`KC`}.png`"
+              :src="`https://aviata.kz/static/airline-logos/80x80/${flight.carrier.short}.png`"
               alt="air astana"
             />
           </div>
-          <h3 class="card__title">Air Astana</h3>
+          <h3 class="card__title">{{ flight.carrier.name }}</h3>
         </div>
         <p class="card__baggage-text">Нет багажа</p>
         <date-time />
-        <route-info class="card__route" />
+        <route-info class="card__route" :flight="flight" />
         <date-time />
       </div>
       <div class="card__actions">
         <custom-button variant="link" size="sm">Детали перелета </custom-button>
         <custom-button variant="link" size="sm">Условия тарифа </custom-button>
-        <p class="card__refund">
+        <p v-if="!flight.refundable" class="card__refund">
           <img src="../../assets/icons/return.svg" alt="невозвратный" />
           <span>невозвратный</span>
         </p>
       </div>
     </div>
     <div class="card__footer">
-      <p class="card__price">590 240 ₸</p>
+      <p class="card__price">{{ flight.price }} ₸</p>
       <custom-button>Выбрать</custom-button>
       <p class="card__passengers">Цена за всех пассажиров</p>
       <div class="card__baggage">
@@ -40,7 +40,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, PropType } from "vue";
+import { Flight } from "@/entities/Flight";
 import CustomButton from "@/components/CustomButton/CustomButton.vue";
 import DateTime from "@/components/DateTime/DateTime.vue";
 import RouteInfo from "@/components/RouteInfo/RouteInfo.vue";
@@ -51,6 +52,12 @@ export default defineComponent({
     "route-info": RouteInfo,
     "date-time": DateTime,
     "custom-button": CustomButton,
+  },
+  props: {
+    flight: {
+      type: Object as PropType<Flight>,
+      required: true,
+    },
   },
 });
 </script>

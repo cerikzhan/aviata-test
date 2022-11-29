@@ -10,7 +10,7 @@
 
     <filter-card title="Авиакомпании">
       <template v-for="option in airlineComputed" :key="option.id">
-        <custom-checkbox v-model="airlines" :value="option.value">{{
+        <custom-checkbox v-model="airlines" :value="option.short">{{
           option.title
         }}</custom-checkbox>
       </template>
@@ -26,15 +26,10 @@
 <script lang="ts">
 import { defineComponent, ref, onMounted, computed } from "vue";
 import { fetchAirlines } from "@/api/repositories";
+import { Airline } from "@/entities/Airline";
 import FilterCard from "@/components/FilterCard/FilterCard.vue";
 import CustomCheckbox from "@/components/CustomCheckbox/CustomCheckbox.vue";
 import CustomButton from "@/components/CustomButton/CustomButton.vue";
-
-interface FilterOption {
-  id: number;
-  value: string;
-  title: string;
-}
 
 export default defineComponent({
   name: "TheSidebar",
@@ -45,7 +40,7 @@ export default defineComponent({
   },
   setup() {
     const tariffs = ref<string[]>([]);
-    const tariffOptions: FilterOption[] = [
+    const tariffOptions = [
       {
         id: 1,
         value: "ST",
@@ -63,12 +58,12 @@ export default defineComponent({
       },
     ];
     const airlines = ref<string[]>(["ALL"]);
-    const airlineOptions = ref<FilterOption[]>([]);
+    const airlineOptions = ref<Airline[]>([]);
 
     const airlineComputed = computed(() => [
       {
         id: 0,
-        value: "ALL",
+        short: "ALL",
         title: "Все",
       },
       ...airlineOptions.value,
@@ -79,12 +74,7 @@ export default defineComponent({
     });
 
     async function getAirlines() {
-      const res = await fetchAirlines();
-      airlineOptions.value = Object.entries(res).map((airline, index) => ({
-        id: index + 1,
-        value: airline[0],
-        title: airline[1],
-      }));
+      airlineOptions.value = await fetchAirlines();
     }
 
     function onFilterReset() {

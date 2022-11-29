@@ -2,20 +2,40 @@
   <div class="home">
     <the-sidebar />
     <div class="home__content">
-      <flight-card />
-      <flight-card />
+      <flight-card
+        v-for="flight in flights"
+        :key="flight.id"
+        :flight="flight"
+      />
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, onMounted, ref } from "vue";
+import { fetchFlights } from "@/api/repositories";
+import { Flight } from "@/entities/Flight";
 import TheSidebar from "@/components/TheSidebar/TheSidebar.vue";
 import FlightCard from "@/components/FlightCard/FlightCard.vue";
 
 export default defineComponent({
   name: "Home",
   components: { "flight-card": FlightCard, "the-sidebar": TheSidebar },
+  setup() {
+    const flights = ref<Flight[]>([]);
+
+    onMounted(() => {
+      getFlights();
+    });
+
+    async function getFlights() {
+      flights.value = await fetchFlights();
+    }
+
+    return {
+      flights,
+    };
+  },
 });
 </script>
 

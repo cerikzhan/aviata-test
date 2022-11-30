@@ -2,14 +2,18 @@
   <div class="home">
     <the-sidebar @change="getFlights" />
     <div class="home__content">
-      <p v-if="!flights.length" class="home__empty">
-        Нет рейсов подходящих по вашему запросу
-      </p>
-      <flight-card
-        v-for="flight in flights"
-        :key="flight.id"
-        :flight="flight"
-      />
+      <transition-group name="list">
+        <p v-if="!flights.length" class="home__empty">
+          Нет рейсов подходящих по вашему запросу
+        </p>
+
+        <flight-card
+          v-for="flight in flights"
+          :key="flight.id"
+          :flight="flight"
+        />
+      </transition-group>
+
       <pagination
         :page="pagination.page"
         :last-page="pagination.lastPage"
@@ -108,5 +112,21 @@ export default defineComponent({
     text-align: center;
     color: $text-color-muted;
   }
+}
+
+.list-move,
+.list-enter-active,
+.list-leave-active {
+  transition: all 0.5s ease;
+}
+
+.list-enter-from,
+.list-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
+}
+
+.list-leave-active {
+  position: absolute;
 }
 </style>
